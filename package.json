@@ -1,0 +1,15 @@
+{
+  "name": "irondark-v6-site-chatbot-gemini",
+  "version": "11.0.0",
+  "description": "Site IRONDARK V11 com chatbot em imagem flutuante azul, parcelamento legível e polimento final visual.",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@google/generative-ai": "latest",
+    "dotenv": "latest",
+    "express": "latest"
+  }
+}

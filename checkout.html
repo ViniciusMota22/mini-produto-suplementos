@@ -1,0 +1,1566 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IRONDARK V11 | Checkout</title>
+
+  <!-- Mesmas fontes do site principal -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <script>document.documentElement.dataset.theme = 'dark'; localStorage.setItem('irondark_theme','dark');</script>
+
+  <style>
+    /* =========================================================
+       VARIÁVEIS – idênticas ao style.css do IRONDARK
+    ========================================================= */
+    :root {
+      --bg:       #050506;
+      --bg-soft:  #0b0b0d;
+      --panel:    #121216;
+      --panel-2:  #19191f;
+      --text:     #f3f3f3;
+      --muted:    #9a9a9f;
+      --line:     rgba(255,255,255,.1);
+      --red:      #d71920;
+      --red-soft: rgba(215,25,32,.22);
+      --steel:    #b8bdc3;
+      --gold:     #d0a84b;
+      --green:     #4ade80;
+      --radius:   14px;
+      --font-title: 'Anton', Impact, sans-serif;
+      --font-body:  'Rajdhani', Arial, sans-serif;
+    }
+
+    html[data-theme="light"] {
+      --bg:       #f4f5f7;
+      --bg-soft:  #ffffff;
+      --panel:    #ffffff;
+      --panel-2:  #eef0f4;
+      --text:     #17191d;
+      --muted:    #5d6470;
+      --line:     rgba(20,24,32,.12);
+      --red-soft: rgba(215,25,32,.12);
+      --steel:    #4f5b68;
+      --gold:     #b88422;
+    }
+
+    html[data-theme="light"] body { background: linear-gradient(180deg, #f7f7f8, #eceff3); }
+    html[data-theme="light"] .topbar { background: rgba(255,255,255,.86); box-shadow: 0 14px 40px rgba(18,25,38,.08); }
+    html[data-theme="light"] .login-link,
+    html[data-theme="light"] .cart-toggle-btn,
+    html[data-theme="light"] .breadcrumb,
+    html[data-theme="light"] .breadcrumb span { color: var(--text); }
+    html[data-theme="light"] .step-card,
+    html[data-theme="light"] .summary-card,
+    html[data-theme="light"] .auth-dialog,
+    html[data-theme="light"] .pay-option,
+    html[data-theme="light"] .card-form input,
+    html[data-theme="light"] .card-form select,
+    html[data-theme="light"] .pix-code,
+    html[data-theme="light"] .coupon-box { background: #ffffff; color: var(--text); box-shadow: 0 18px 55px rgba(17,24,39,.08); }
+    html[data-theme="light"] .auth-dialog { background: radial-gradient(circle at 15% 0%, rgba(215,25,32,.13), transparent 34%), linear-gradient(180deg, #ffffff, #f1f3f6 72%); }
+    html[data-theme="light"] .theme-toggle { background: #17191d; color: #fff; border-color: #17191d; }
+    html[data-theme="light"] .theme-toggle .theme-moon { display:block; }
+    html[data-theme="light"] .theme-toggle .theme-sun { display:none; }
+    html[data-theme="dark"] .theme-toggle .theme-sun { display:block; }
+    html[data-theme="dark"] .theme-toggle .theme-moon { display:none; }
+
+    /* =========================================================
+       RESET BASE
+    ========================================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font-family: inherit; }
+
+    /* Textura noise igual ao site */
+    .noise {
+      position: fixed; inset: 0; z-index: 9999;
+      pointer-events: none; opacity: .045;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height%3D'100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* =========================================================
+       TOPBAR – igual à do site principal
+    ========================================================= */
+    .topbar {
+      position: fixed; inset: 0 0 auto 0;
+      height: 70px; z-index: 1000;
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 0 6vw;
+      background: rgba(5,5,6,.85);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-title);
+      font-size: 1.55rem; letter-spacing: 2px;
+    }
+    .brand span span { color: var(--red); }
+    .brand-mark {
+      width: 36px; height: 36px;
+      display: grid; place-items: center;
+      border: 1px solid rgba(215,25,32,.65);
+      background: linear-gradient(135deg, #151515, #050505 50%, rgba(215,25,32,.25));
+      color: #fff; font-size: .85rem;
+      clip-path: polygon(50% 0, 96% 20%, 82% 100%, 18% 100%, 4% 20%);
+    }
+
+    /* Breadcrumb do topo direito */
+    .breadcrumb {
+      font-size: .82rem; font-weight: 600;
+      color: var(--muted); letter-spacing: 1px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .breadcrumb span { color: var(--text); }
+    .breadcrumb .sep { color: var(--muted); }
+
+    /* Botão voltar */
+    .back-link {
+      display: flex; align-items: center; gap: 6px;
+      font-size: .85rem; font-weight: 700;
+      color: var(--red); letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer; transition: .2s;
+    }
+    .back-link:hover { opacity: .75; }
+    .back-link::before { content: '‹'; font-size: 1.1rem; }
+
+    .topbar-actions { display:flex; align-items:center; gap:12px; }
+    .login-link { display:flex; align-items:center; gap:10px; background:transparent; color:#fff; padding:8px 12px; border-radius:10px; text-decoration:none; font-weight:800; border:1px solid rgba(255,255,255,.06); }
+    .login-link .login-icon { font-size:1.35rem; }
+    .login-link .login-text { line-height:1; font-size:.95rem; display:inline-block; }
+    .login-link:hover { color:var(--red); border-color:rgba(215,25,32,.35); }
+    .cart-toggle-btn { position:relative; display:inline-grid; place-items:center; width:48px; height:44px; background:transparent; border:1px solid rgba(255,255,255,.06); border-radius:8px; color:#fff; cursor:pointer; font-size:1.2rem; }
+    .cart-toggle-btn .cart-bubble { position:absolute; top:-6px; right:-6px; min-width:20px; height:20px; padding:0 6px; display:none; align-items:center; justify-content:center; font-size:.78rem; background:#fff; color:#050506; border-radius:999px; border:2px solid rgba(255,255,255,.9); box-shadow:0 0 0 2px rgba(0,0,0,.45); }
+    .theme-toggle { min-width:94px; height:44px; border-radius:999px; border:1px solid rgba(255,255,255,.1); background:rgba(255,255,255,.045); color:#fff; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:8px; font-weight:900; text-transform:uppercase; letter-spacing:.8px; transition:.22s; }
+    .theme-toggle:hover { transform:translateY(-2px); border-color:rgba(215,25,32,.45); }
+    .theme-icon { width:18px; height:18px; object-fit:contain; }
+    .theme-sun { filter:invert(1); }
+    .login-svg-icon, .cart-svg-icon { width:24px; height:24px; border-radius:50%; object-fit:cover; }
+    .cart-svg-icon { width:25px; height:25px; }
+
+    /* =========================================================
+       LOGIN / CADASTRO DECORATIVO
+    ========================================================= */
+/* Estilos do modal decorativo de login/cadastro */
+    .auth-modal { display:none; position:fixed; inset:0; z-index:1800; padding:20px; }
+    .auth-modal[aria-hidden="false"] { display:grid; place-items:center; }
+    .auth-backdrop { position:fixed; inset:0; background:rgba(0,0,0,.78); backdrop-filter: blur(8px); }
+    .auth-dialog {
+      position:relative; width:min(520px,96vw); max-height:92vh; overflow:auto;
+      background: radial-gradient(circle at 15% 0%, rgba(215,25,32,.22), transparent 34%), linear-gradient(180deg, #15151a, #08080a 72%);
+      border:1px solid rgba(255,255,255,.12); border-radius:22px; color:var(--text);
+      padding:28px; box-shadow:0 32px 90px rgba(0,0,0,.65), 0 0 0 1px rgba(215,25,32,.08) inset;
+    }
+    .auth-dialog::before { content:''; position:absolute; inset:0; pointer-events:none; border-radius:22px; background:linear-gradient(135deg, rgba(255,255,255,.08), transparent 35%, rgba(215,25,32,.12)); }
+    .auth-close { position:absolute; right:18px; top:14px; width:34px; height:34px; border-radius:50%; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); color:#fff; font-size:24px; cursor:pointer; z-index:2; }
+    .auth-close:hover { border-color:var(--red); color:var(--red); }
+    .auth-brand { position:relative; z-index:1; display:flex; align-items:center; gap:14px; margin-bottom:16px; }
+    .auth-brand-mark { width:46px; height:46px; display:grid; place-items:center; border:1px solid rgba(215,25,32,.7); background:linear-gradient(135deg, #25252b, #08080a 55%, rgba(215,25,32,.4)); font-family:var(--font-title); clip-path:polygon(50% 0,96% 20%,82% 100%,18% 100%,4% 20%); }
+    .auth-brand p { margin:0 0 2px; color:var(--muted); text-transform:uppercase; letter-spacing:2px; font-size:.78rem; font-weight:800; }
+    .auth-brand h3 { margin:0; font-family:var(--font-title); letter-spacing:2px; font-size:2rem; }
+    .auth-brand h3 span { color:var(--red); }
+    .auth-sub { position:relative; z-index:1; color:var(--muted); line-height:1.5; margin-bottom:18px; }
+    .auth-tabs { position:relative; z-index:1; display:grid; grid-template-columns:1fr 1fr; gap:8px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); padding:6px; border-radius:999px; margin-bottom:18px; }
+    .auth-tab { border:0; border-radius:999px; padding:12px; background:transparent; color:var(--muted); font-weight:900; text-transform:uppercase; letter-spacing:1px; cursor:pointer; }
+    .auth-tab.active { background:linear-gradient(135deg, var(--red), #6e090d); color:#fff; box-shadow:0 12px 30px rgba(215,25,32,.24); }
+    .auth-panel { position:relative; z-index:1; display:none; flex-direction:column; gap:12px; }
+    .auth-panel.active { display:flex; }
+    .auth-dialog .field-group { display:flex; flex-direction:column; gap:6px; }
+    .auth-dialog .field-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .auth-dialog label { color:var(--steel); text-transform:uppercase; font-size:.78rem; letter-spacing:1.2px; font-weight:800; }
+    .auth-dialog input { width:100%; padding:13px 14px; background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.1); color:var(--text); border-radius:12px; outline:none; font-weight:700; }
+    .auth-dialog input:focus { border-color:var(--red); box-shadow:0 0 0 3px rgba(215,25,32,.16); }
+    .auth-dialog input::placeholder { color:#6f6f78; }
+    .auth-dialog .btn { width:100%; justify-content:center; margin-top:4px; }
+
+    .auth-dialog .btn.primary,
+    .auth-dialog button.btn.primary {
+      min-height: 46px;
+      border: 0;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--red), #70080c);
+      color: #fff;
+      font-family: var(--font-title);
+      font-size: 1rem;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 14px 34px rgba(215,25,32,.24);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: .22s;
+    }
+    .auth-dialog .btn.primary:hover,
+    .auth-dialog button.btn.primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 44px rgba(215,25,32,.34);
+    }
+    .auth-link-button { align-self:center; border:0; background:transparent; color:var(--red); font-weight:800; cursor:pointer; padding:6px; }
+    .auth-link-button:hover { text-decoration:underline; }
+    .auth-feedback { display:none; position:relative; z-index:1; margin-top:14px; padding:12px 14px; border-radius:12px; background:rgba(74,222,128,.08); border:1px solid rgba(74,222,128,.25); color:var(--green); font-weight:800; text-align:center; }
+    .auth-feedback.show { display:block; }
+    
+    /* =========================================================
+       LAYOUT PRINCIPAL
+    ========================================================= */
+    .checkout-page {
+      min-height: 100vh;
+      padding: 100px 5% 60px;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 2rem;
+      max-width: 1140px;
+      margin: 0 auto;
+      align-items: start;
+    }
+
+    /* =========================================================
+       PAINEL ESQUERDO – Etapas
+    ========================================================= */
+    .steps-col { display: flex; flex-direction: column; gap: 1rem; }
+
+    /* Card de cada etapa */
+    .step-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: .3s;
+    }
+
+    /* Cabeçalho da etapa (sempre visível) */
+    .step-header {
+      display: flex; align-items: center; gap: 14px;
+      padding: 1.1rem 1.5rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .step-num {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: var(--panel-2);
+      border: 2px solid var(--line);
+      display: grid; place-items: center;
+      font-family: var(--font-title);
+      font-size: 1rem; color: var(--muted);
+      flex-shrink: 0;
+      transition: .3s;
+    }
+
+    /* Etapa ativa: número fica vermelho */
+    .step-card.active .step-num {
+      background: var(--red-soft);
+      border-color: var(--red);
+      color: var(--text);
+    }
+
+    /* Etapa concluída: número fica verde com check */
+    .step-card.done .step-num {
+      background: rgba(74,222,128,.15);
+      border-color: var(--green);
+      color: var(--green);
+      font-size: .9rem;
+    }
+
+    .step-title {
+      font-family: var(--font-title);
+      font-size: 1.15rem; letter-spacing: 1.5px;
+      color: var(--muted);
+      transition: .3s;
+    }
+    .step-card.active .step-title { color: var(--text); }
+    .step-card.done  .step-title { color: var(--steel); }
+
+    /* Corpo da etapa (aparece só quando ativa) */
+    .step-body {
+      display: none;
+      padding: 0 1.5rem 1.5rem;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .step-card.active .step-body { display: flex; }
+
+    /* =========================================================
+       FORMULÁRIOS DENTRO DAS ETAPAS
+    ========================================================= */
+    .field-group { display: flex; flex-direction: column; gap: .4rem; }
+    .field-group label {
+      font-size: .8rem; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase;
+      color: var(--muted);
+    }
+    .field-group input,
+    .field-group select {
+      background: var(--bg-soft);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: .75rem 1rem;
+      color: var(--text);
+      font-size: .95rem; font-weight: 600;
+      outline: none; transition: .2s;
+      width: 100%;
+    }
+    .field-group input:focus,
+    .field-group select:focus {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px var(--red-soft);
+    }
+    .field-group input::placeholder { color: var(--muted); }
+
+    .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+
+    .field-hint {
+      font-size: .78rem; color: var(--muted);
+      margin-top: -.2rem;
+    }
+
+    .register-link {
+      font-size: .85rem; color: var(--muted);
+    }
+    .register-link a { color: var(--red); font-weight: 700; text-decoration: underline; }
+
+    /* Botões de navegação entre etapas */
+    .step-nav {
+      display: flex; justify-content: flex-end; gap: .75rem;
+      margin-top: .5rem;
+    }
+
+    .btn-back-step {
+      background: transparent;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      padding: .65rem 1.4rem;
+      border-radius: 8px;
+      font-weight: 700; font-size: .9rem;
+      cursor: pointer; transition: .2s;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .btn-back-step:hover { border-color: var(--steel); color: var(--text); }
+    .btn-back-step::before { content: '‹'; font-size: 1.1rem; }
+
+    .btn-next-step {
+      background: var(--red);
+      border: none;
+      color: #fff;
+      padding: .65rem 1.6rem;
+      border-radius: 8px;
+      font-family: var(--font-title);
+      font-size: 1rem; letter-spacing: 1.5px;
+      cursor: pointer; transition: .2s;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .btn-next-step:hover { background: #b8141a; transform: translateY(-1px); }
+    .btn-next-step::after { content: '›'; font-size: 1.1rem; }
+
+    /* =========================================================
+       MÉTODOS DE PAGAMENTO
+    ========================================================= */
+
+    .account-quick-actions { display:grid; grid-template-columns:1fr 1fr; gap:.75rem; margin:1rem 0 .2rem; }
+    .btn-auth-mini {
+      border:1px solid rgba(255,255,255,.12); border-radius:999px; padding:.8rem 1rem;
+      background:rgba(255,255,255,.04); color:var(--text); cursor:pointer;
+      font-weight:900; text-transform:uppercase; letter-spacing:1px; transition:.25s;
+    }
+    .btn-auth-mini.primary { background:linear-gradient(135deg, var(--red), #71090d); border-color:transparent; }
+    .btn-auth-mini:hover { transform:translateY(-2px); border-color:var(--red); }
+
+    .payment-methods { display: flex; gap: .75rem; flex-wrap: wrap; }
+    .payment-option-logo { height:28px; max-width:70px; object-fit:contain; display:block; margin:0 auto .35rem; }
+
+    .pay-option {
+      flex: 1 1 120px;
+      background: var(--bg-soft);
+      border: 2px solid var(--line);
+      border-radius: 10px;
+      padding: .9rem 1rem;
+      cursor: pointer; transition: .25s;
+      text-align: center;
+    }
+    .pay-option:hover { border-color: var(--steel); }
+    .pay-option.selected { border-color: var(--red); background: var(--red-soft); }
+    .pay-option input[type="radio"] { display: none; }
+    .pay-icon { font-size: 1.5rem; margin-bottom: .3rem; }
+    .pay-label { font-size: .8rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+
+    .all-payment-methods { display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:.75rem; }
+    .all-payment-methods .pay-option { min-height:82px; flex:none; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+    .all-payment-methods .payment-option-logo { height:26px; max-width:76px; margin:0 auto .35rem; }
+    .all-payment-methods img[src$="odin.svg"] { width:34px; height:34px; border-radius:50%; }
+    .all-payment-methods img[src$="pix.svg"] { height:30px; max-width:70px; }
+    @media (max-width: 720px) {
+      .all-payment-methods { grid-template-columns:repeat(2, minmax(0,1fr)); }
+      .theme-toggle { min-width:44px; padding:0; }
+      .theme-toggle-text { display:none; }
+    }
+
+    /* Formulário do cartão (aparece quando "Cartão" é selecionado) */
+    .card-form { display: flex; flex-direction: column; gap: 1rem; }
+
+    /* PIX QR falso */
+    .pix-area {
+      display: none;
+      flex-direction: column; align-items: center; gap: 1rem;
+      padding: 1rem 0;
+    }
+    .pix-area.show { display: flex; }
+    .pix-qr {
+      width: min(240px, 78vw); height: auto;
+      background: #111;
+      border-radius: 14px;
+      display: grid; place-items: center;
+      padding: 10px;
+      box-shadow: 0 18px 48px rgba(0,0,0,.28);
+    }
+    .pix-qr-img { width:100%; height:auto; border-radius:10px; display:block; }
+    .pix-code {
+      font-size: .78rem; color: var(--muted);
+      background: var(--bg-soft);
+      border: 1px solid var(--line);
+      border-radius: 8px; padding: .6rem 1rem;
+      text-align: center; width: 100%;
+      letter-spacing: 1px;
+    }
+
+    /* Boleto */
+    .boleto-area {
+      display: none;
+      flex-direction: column; align-items: center; gap: .75rem;
+      padding: 1rem 0; text-align: center;
+    }
+    .boleto-area.show { display: flex; }
+    .boleto-icon { font-size: 3rem; }
+    .boleto-info { font-size: .9rem; color: var(--muted); line-height: 1.5; }
+
+    /* =========================================================
+       ETAPA PEDIDO CONCLUÍDO
+    ========================================================= */
+    .success-body {
+      display: none;
+      flex-direction: column; align-items: center;
+      gap: 1rem; padding: 2rem 1.5rem; text-align: center;
+    }
+    .step-card.active .success-body { display: flex; }
+    .success-icon {
+      font-size: 4rem;
+      animation: popIn .5s ease both;
+    }
+    .success-title {
+      font-family: var(--font-title);
+      font-size: 1.8rem; letter-spacing: 2px; color: var(--green);
+    }
+    .success-sub { font-size: 1rem; color: var(--muted); line-height: 1.6; max-width: 380px; }
+    .success-code {
+      background: var(--bg-soft); border: 1px solid var(--green);
+      border-radius: 8px; padding: .6rem 1.4rem;
+      font-family: var(--font-title); font-size: 1.1rem;
+      color: var(--green); letter-spacing: 3px;
+    }
+    .btn-back-home {
+      background: var(--red); color: #fff; border: none;
+      padding: .75rem 2rem; border-radius: 8px;
+      font-family: var(--font-title); font-size: 1rem;
+      letter-spacing: 1.5px; cursor: pointer; transition: .2s;
+      margin-top: .5rem;
+    }
+    .btn-back-home:hover { background: #b8141a; }
+
+    /* =========================================================
+       PAINEL DIREITO – Resumo do pedido
+    ========================================================= */
+    .summary-col {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      position: sticky; top: 90px;
+    }
+
+    .summary-title {
+      font-family: var(--font-title);
+      font-size: 1.2rem; letter-spacing: 2px;
+      margin-bottom: 1.2rem;
+      padding-bottom: .75rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    /* Lista de itens do carrinho */
+    .summary-items { display: flex; flex-direction: column; gap: .75rem; }
+
+    .summary-item {
+      display: flex; align-items: center; gap: .75rem;
+    }
+    .summary-item-img {
+      width: 50px; height: 50px; border-radius: 8px;
+      background: var(--panel-2);
+      display: grid; place-items: center;
+      font-size: 1.6rem; flex-shrink: 0;
+      border: 1px solid var(--line);
+    }
+    .summary-item-info { flex: 1; }
+    .summary-item-name {
+      font-size: .88rem; font-weight: 700; line-height: 1.3;
+    }
+    .summary-item-sub { font-size: .75rem; color: var(--muted); margin-top: 2px; }
+    .summary-item-qty {
+      display: flex; align-items: center; gap: 6px;
+    }
+    .qty-btn {
+      width: 22px; height: 22px;
+      background: var(--panel-2); border: 1px solid var(--line);
+      border-radius: 4px; color: var(--text);
+      font-size: .85rem; cursor: pointer;
+      display: grid; place-items: center; transition: .2s;
+    }
+    .qty-btn:hover { border-color: var(--red); color: var(--red); }
+    .qty-num { font-size: .85rem; font-weight: 700; min-width: 16px; text-align: center; }
+    .summary-item-price { font-size: .95rem; font-weight: 700; color: var(--text); white-space: nowrap; }
+    .remove-item {
+      color: var(--muted); font-size: 1rem;
+      cursor: pointer; transition: .2s; padding: 2px 4px;
+    }
+    .remove-item:hover { color: var(--red); }
+
+    /* Divisor */
+    .summary-divider {
+      border: none; border-top: 1px solid var(--line);
+      margin: 1rem 0;
+    }
+
+    /* Totais */
+    .summary-row {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: .88rem; color: var(--muted);
+      margin-bottom: .5rem;
+    }
+    .summary-row.total {
+      font-family: var(--font-title);
+      font-size: 1.3rem; letter-spacing: 1px;
+      color: var(--text);
+      margin-top: .25rem; margin-bottom: 0;
+    }
+    .summary-row.total span:last-child { color: var(--red); }
+
+    /* Cupom */
+    .coupon-area {
+      background: var(--bg-soft);
+      border: 1px solid var(--line);
+      border-radius: 8px; padding: .75rem;
+      margin-top: 1rem;
+    }
+    .coupon-label {
+      font-size: .72rem; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--muted); margin-bottom: .5rem;
+      display: flex; align-items: center; gap: 5px;
+    }
+    .coupon-label::before { content: '%'; font-size: .8rem; color: var(--red); }
+    .coupon-row { display: flex; gap: .5rem; }
+    .coupon-input {
+      flex: 1;
+      background: var(--panel-2); border: 1px solid var(--line);
+      border-radius: 6px; padding: .55rem .75rem;
+      color: var(--text); font-size: .85rem; font-weight: 600;
+      outline: none; text-transform: uppercase; letter-spacing: 1px;
+      transition: .2s;
+    }
+    .coupon-input:focus { border-color: var(--red); }
+    .coupon-input::placeholder { text-transform: none; letter-spacing: 0; color: var(--muted); }
+    .btn-coupon {
+      background: var(--red); color: #fff; border: none;
+      padding: .55rem 1rem; border-radius: 6px;
+      font-weight: 700; font-size: .85rem;
+      cursor: pointer; transition: .2s; white-space: nowrap;
+    }
+    .btn-coupon:hover { background: #b8141a; }
+
+    /* Badges de pagamento seguro */
+    .security-badges {
+      margin-top: 1rem;
+      display: flex; flex-direction: column; gap: .4rem;
+    }
+    .security-row {
+      display: flex; align-items: center; gap: 6px;
+      font-size: .75rem; color: var(--muted);
+    }
+    .security-row span:first-child { font-size: .9rem; }
+    .card-logos {
+      display: flex; gap: .38rem; flex-wrap: wrap; margin-top: .45rem;
+    }
+    .card-logos img {
+      height: 22px; max-width:54px; object-fit:contain;
+      padding:4px 6px; border-radius:6px;
+      background:rgba(255,255,255,.13); border:1px solid rgba(255,255,255,.08);
+    }
+    .card-logos img[src$="odin.svg"] { width:30px; height:30px; border-radius:50%; }
+    .card-logos img[src$="pix.svg"] { height:24px; max-width:58px; }
+    .card-logos img[src$="boleto.svg"] { max-width:60px; }
+
+    /* =========================================================
+       ANIMAÇÕES
+    ========================================================= */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes popIn {
+      0%  { transform: scale(.4); opacity: 0; }
+      70% { transform: scale(1.15); }
+      100%{ transform: scale(1); opacity: 1; }
+    }
+
+    .steps-col, .summary-col {
+      animation: fadeUp .5s ease both;
+    }
+    .summary-col { animation-delay: .1s; }
+
+    /* =========================================================
+       MENSAGEM CARRINHO VAZIO
+    ========================================================= */
+    .empty-cart-msg {
+      text-align: center;
+      padding: 2rem 1rem;
+      color: var(--muted);
+      font-size: .95rem;
+      line-height: 1.6;
+    }
+    .empty-cart-msg .icon { font-size: 3rem; margin-bottom: .75rem; }
+    .btn-go-back {
+      display: inline-block;
+      margin-top: 1rem;
+      background: var(--red); color: #fff; border: none;
+      padding: .65rem 1.5rem; border-radius: 8px;
+      font-family: var(--font-title); font-size: .95rem;
+      letter-spacing: 1.5px; cursor: pointer; transition: .2s;
+    }
+    .btn-go-back:hover { background: #b8141a; }
+
+    /* =========================================================
+       RESPONSIVO
+    ========================================================= */
+    @media (max-width: 860px) {
+      .checkout-page {
+        grid-template-columns: 1fr;
+        padding: 90px 4% 50px;
+      }
+      .summary-col { position: static; order: -1; }
+    }
+
+    @media (max-width: 500px) {
+      .row-2, .row-3 { grid-template-columns: 1fr; }
+      .payment-methods { flex-direction: column; }
+      .breadcrumb { display: none; }
+    }
+
+
+    /* =========================================================
+       AJUSTES V4 - topo, fundo preto e enquadramento
+    ========================================================= */
+    body { background: #000 !important; }
+    .noise { display: none !important; }
+    .checkout-page { background: #000 !important; }
+    .step-card, .summary-card { background: #070708 !important; }
+    .topbar .login-link {
+      min-width: 146px;
+      justify-content: center;
+      padding: 9px 13px;
+      border-radius: 10px;
+      border: 1px solid rgba(215,25,32,.62) !important;
+      background: rgba(215,25,32,.035) !important;
+      color: var(--red) !important;
+      text-decoration: none !important;
+      box-shadow: inset 0 0 18px rgba(215,25,32,.08);
+    }
+    .topbar .login-link:hover {
+      color: #fff !important;
+      border-color: var(--red) !important;
+      background: rgba(215,25,32,.12) !important;
+      text-decoration: none !important;
+    }
+    .topbar .login-link .login-icon { color:#bfc1c4; filter:grayscale(1); }
+    .topbar .login-link .login-text { color:inherit; text-align:center; line-height:1.05; font-weight:900; }
+    .summary-item { align-items: center; }
+    .summary-item-img {
+      width: 62px !important;
+      height: 72px !important;
+      padding: 5px;
+      background: radial-gradient(circle at center, rgba(255,255,255,.08), rgba(255,255,255,.025)) !important;
+      overflow: hidden;
+    }
+    .summary-item-img img {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: contain !important;
+      border-radius: 6px !important;
+    }
+
+    /* V6: overrides finais para o light mode no checkout */
+    html[data-theme="light"] body { background: #f4f5f7 !important; }
+    html[data-theme="light"] .checkout-page { background: transparent !important; }
+    html[data-theme="light"] .step-card,
+    html[data-theme="light"] .summary-card { background: #ffffff !important; color: var(--text) !important; box-shadow: 0 18px 55px rgba(17,24,39,.08); }
+    html[data-theme="light"] .topbar { background: rgba(255,255,255,.9) !important; }
+    html[data-theme="light"] .summary-item-img { background: radial-gradient(circle at center, rgba(215,25,32,.08), rgba(20,24,32,.035)) !important; }
+    html[data-theme="light"] .topbar .login-link:hover { color: var(--red) !important; background: rgba(215,25,32,.08) !important; }
+
+
+  </style>
+
+  <style>
+    .theme-toggle { display:none !important; }
+    .topbar .login-link, .topbar .cart-toggle-btn { background: transparent !important; border: none !important; box-shadow: none !important; }
+    .topbar .login-link { padding: 8px 12px; border-radius: 12px; color: #e8e8ea !important; }
+    .topbar .login-link:hover { background: rgba(215,25,32,.08) !important; color: #d71920 !important; }
+    .topbar .login-link .login-icon, .cart-svg-icon { color: #f2f2f4 !important; filter:none !important; width:24px; height:24px; }
+    .cart-toggle-btn .cart-bubble { background: #d71920 !important; color:#fff !important; border:2px solid #050506 !important; box-shadow:none !important; }
+  </style>
+
+  <style>
+    :root { --bg:#0c1014; --bg-soft:#151b22; --panel:#171d24; --panel-2:#1c232b; --text:#eef1f4; --muted:#9ba3ac; --line:rgba(255,255,255,.085); }
+    body { background: linear-gradient(180deg, #11161c, #0c1014) !important; }
+    .topbar { background: rgba(12,16,20,.86) !important; border-bottom-color: rgba(255,255,255,.07) !important; }
+    .step-card, .summary-card, .auth-dialog, .pay-option, .card-form input, .card-form select, .pix-code, .coupon-box { background: linear-gradient(180deg, rgba(23,29,36,.98), rgba(17,22,28,.98)) !important; }
+  </style>
+
+  <style>
+    :root { --bg:#0d1116; --bg-soft:#151b22; --panel:#171d24; --panel-2:#202731; --line:rgba(255,255,255,.075); --muted:#a5adb7; }
+    body { background: radial-gradient(circle at 18% 8%, rgba(215,25,32,.055), transparent 26%), linear-gradient(180deg, #11161c 0%, #0d1116 55%, #10151b 100%) !important; }
+    .topbar { background: rgba(13,17,22,.88) !important; box-shadow: 0 16px 42px rgba(0,0,0,.18); }
+    .step-card, .summary-card, .auth-dialog, .pay-option, .card-form input, .card-form select, .pix-code, .coupon-box {
+      background: linear-gradient(180deg, rgba(23,29,36,.98), rgba(17,22,28,.98)) !important;
+      border-color: rgba(255,255,255,.075) !important;
+      box-shadow: 0 22px 70px rgba(0,0,0,.22) !important;
+    }
+  </style>
+
+  <style>
+    #parcelas-select, .field-group select { background:#12181f !important; color:#f2f5f7 !important; border-color:rgba(215,25,32,.72) !important; color-scheme:dark; }
+    #parcelas-select option, .field-group select option { background:#141b22 !important; color:#f2f5f7 !important; }
+  </style>
+</head>
+<body>
+
+  <!-- Textura noise -->
+  <div class="noise"></div>
+
+  <!-- =========================================================
+       TOPBAR
+  ========================================================= -->
+  <header class="topbar">
+    <div class="back-link" onclick="window.location.href='index.html'">
+      Voltar à loja
+    </div>
+
+    <a class="brand" href="index.html" aria-label="IRONDARK — voltar ao início">
+      <span>IRON<span>DARK</span></span>
+    </a>
+
+    <div class="breadcrumb">
+      <span>Início</span>
+      <span class="sep">›</span>
+      <span>Carrinho</span>
+      <span class="sep">›</span>
+      <span>Checkout</span>
+    </div>
+
+    <div class="topbar-actions">
+      <a class="login-link" href="#contato" title="Entrar / Cadastrar">
+        <img class="login-svg-icon" src="assets/icons/profile-svgrepo-com.svg" alt="" aria-hidden="true" />
+        <span class="login-text">Cadastre-se ou<br>faça seu login</span>
+      </a>
+
+      <button class="cart-toggle-btn" aria-label="Abrir carrinho">
+        <img class="cart-svg-icon" src="assets/icons/cart-svgrepo-com.svg" alt="" aria-hidden="true" />
+        <span class="cart-bubble" aria-hidden="true" style="display:none">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Modal decorativo de login/cadastro -->
+  <div id="auth-modal" class="auth-modal" aria-hidden="true">
+    <div class="auth-backdrop"></div>
+    <div class="auth-dialog" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+      <button class="auth-close" aria-label="Fechar">×</button>
+
+      <div class="auth-brand">
+        <span class="auth-brand-mark">ID</span>
+        <div>
+          <p>Área do cliente</p>
+          <h3 id="auth-title">IRON<span>DARK</span></h3>
+        </div>
+      </div>
+
+      <p class="auth-sub">Entre na sua conta ou crie seu cadastro para acompanhar pedidos e finalizar a compra com mais agilidade.</p>
+
+      <div class="auth-tabs" role="tablist" aria-label="Login e cadastro">
+        <button type="button" class="auth-tab active" data-auth-tab="login">Entrar</button>
+        <button type="button" class="auth-tab" data-auth-tab="register">Cadastrar</button>
+      </div>
+
+      <form class="auth-panel active" data-auth-panel="login">
+        <div class="field-group">
+          <label for="login-identifier">E-mail ou CPF</label>
+          <input id="login-identifier" type="text" placeholder="Digite seu e-mail ou CPF" autocomplete="username" />
+        </div>
+        <div class="field-group">
+          <label for="login-pass">Senha</label>
+          <input id="login-pass" type="password" placeholder="Digite sua senha" autocomplete="current-password" />
+        </div>
+        <button type="button" class="btn primary auth-fake-login">Entrar na conta</button>
+        <button type="button" class="auth-link-button">Esqueci minha senha</button>
+      </form>
+
+      <form class="auth-panel" data-auth-panel="register">
+        <div class="field-group"><label for="reg-name">Nome completo</label><input id="reg-name" type="text" placeholder="Seu nome" /></div>
+        <div class="field-group"><label for="reg-email">E-mail</label><input id="reg-email" type="email" placeholder="seuemail@exemplo.com" /></div>
+        <div class="field-row">
+          <div class="field-group"><label for="reg-cpf">CPF</label><input id="reg-cpf" type="text" placeholder="000.000.000-00" /></div>
+          <div class="field-group"><label for="reg-phone">Celular</label><input id="reg-phone" type="text" placeholder="(00) 00000-0000" /></div>
+        </div>
+        <div class="field-group"><label for="reg-pass">Senha</label><input id="reg-pass" type="password" placeholder="Crie uma senha" /></div>
+        <button type="submit" class="btn primary">Criar cadastro</button>
+      </form>
+
+      <div class="auth-feedback" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       PÁGINA DE CHECKOUT
+  ========================================================= -->
+  <div class="checkout-page">
+
+    <!-- ── COLUNA ESQUERDA: Etapas ── -->
+    <div class="steps-col">
+
+      <!-- ======= ETAPA 1: SUA CONTA ======= -->
+      <div class="step-card active" id="step1">
+        <div class="step-header" onclick="toggleStep(1)">
+          <div class="step-num" id="num1">1</div>
+          <div class="step-title">SUA CONTA</div>
+        </div>
+        <div class="step-body">
+
+          <p style="color:var(--muted);line-height:1.5;margin-bottom:1rem">
+            Use os botões abaixo para abrir a área do cliente com login e cadastro.
+          </p>
+
+          <div class="account-quick-actions">
+            <button type="button" class="btn-auth-mini primary" onclick="openAuth('login')">Entrar</button>
+            <button type="button" class="btn-auth-mini" onclick="openAuth('register')">Cadastrar</button>
+          </div>
+
+          <div class="field-group">
+            <label>E-mail</label>
+            <input type="email" id="email-input" placeholder="exemplo@email.com" value="cliente@irondark.com" />
+          </div>
+
+          <div class="field-group">
+            <label>Senha</label>
+            <input type="password" id="senha-input" placeholder="Digite sua senha" value="123456" />
+          </div>
+
+          <p class="register-link">
+            Não possui conta? <a href="#" data-open-auth="register">Clique aqui.</a>
+          </p>
+
+          <div class="step-nav">
+            <button class="btn-next-step" onclick="avancarEtapa(1)">Continuar compra</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======= ETAPA 2: MÉTODO DE PAGAMENTO ======= -->
+      <div class="step-card" id="step2">
+        <div class="step-header" onclick="toggleStep(2)">
+          <div class="step-num" id="num2">2</div>
+          <div class="step-title">MÉTODO DE PAGAMENTO</div>
+        </div>
+        <div class="step-body">
+
+          <div class="payment-methods all-payment-methods">
+            <label class="pay-option selected" id="pay-cartao">
+              <input type="radio" name="pagamento" value="cartao" checked onchange="selecionarPagamento('cartao')" />
+              <img class="payment-option-logo" src="assets/payment/VISA.svg" alt="Visa" />
+              <div class="pay-label">Visa</div>
+            </label>
+            <label class="pay-option payment-brand">
+              <input type="radio" name="pagamento" value="cartao" onchange="selecionarPagamento('cartao')" />
+              <img class="payment-option-logo" src="assets/payment/mastercard.svg" alt="Mastercard" />
+              <div class="pay-label">Master</div>
+            </label>
+            <label class="pay-option payment-brand">
+              <input type="radio" name="pagamento" value="cartao" onchange="selecionarPagamento('cartao')" />
+              <img class="payment-option-logo" src="assets/payment/odin.svg" alt="Diners Club" />
+              <div class="pay-label">Diners</div>
+            </label>
+            <label class="pay-option payment-brand">
+              <input type="radio" name="pagamento" value="cartao" onchange="selecionarPagamento('cartao')" />
+              <img class="payment-option-logo" src="assets/payment/amerecianexpress.svg" alt="American Express" />
+              <div class="pay-label">Amex</div>
+            </label>
+            <label class="pay-option payment-brand">
+              <input type="radio" name="pagamento" value="cartao" onchange="selecionarPagamento('cartao')" />
+              <img class="payment-option-logo" src="assets/payment/hipercard.svg" alt="Hipercard" />
+              <div class="pay-label">Hiper</div>
+            </label>
+            <label class="pay-option payment-brand">
+              <input type="radio" name="pagamento" value="cartao" onchange="selecionarPagamento('cartao')" />
+              <img class="payment-option-logo" src="assets/payment/aura.svg" alt="Aura" />
+              <div class="pay-label">Aura</div>
+            </label>
+            <label class="pay-option payment-brand">
+              <input type="radio" name="pagamento" value="cartao" onchange="selecionarPagamento('cartao')" />
+              <img class="payment-option-logo" src="assets/payment/elo.svg" alt="Elo" />
+              <div class="pay-label">Elo</div>
+            </label>
+            <label class="pay-option" id="pay-boleto">
+              <input type="radio" name="pagamento" value="boleto" onchange="selecionarPagamento('boleto')" />
+              <img class="payment-option-logo" src="assets/payment/boleto.svg" alt="Boleto" />
+              <div class="pay-label">Boleto</div>
+            </label>
+            <label class="pay-option payment-brand">
+              <input type="radio" name="pagamento" value="cartao" onchange="selecionarPagamento('cartao')" />
+              <img class="payment-option-logo" src="assets/payment/bancodobrasil.svg" alt="Banco do Brasil" />
+              <div class="pay-label">Banco</div>
+            </label>
+            <label class="pay-option payment-brand">
+              <input type="radio" name="pagamento" value="cartao" onchange="selecionarPagamento('cartao')" />
+              <img class="payment-option-logo" src="assets/payment/caixa.svg" alt="Caixa" />
+              <div class="pay-label">Caixa</div>
+            </label>
+            <label class="pay-option payment-brand">
+              <input type="radio" name="pagamento" value="cartao" onchange="selecionarPagamento('cartao')" />
+              <img class="payment-option-logo" src="assets/payment/paypal.svg" alt="PayPal" />
+              <div class="pay-label">PayPal</div>
+            </label>
+            <label class="pay-option" id="pay-pix">
+              <input type="radio" name="pagamento" value="pix" onchange="selecionarPagamento('pix')" />
+              <img class="payment-option-logo" src="assets/payment/pix.svg" alt="PIX" />
+              <div class="pay-label">PIX</div>
+            </label>
+          </div>
+
+          <!-- Formulário cartão -->
+          <div class="card-form" id="form-cartao">
+            <div class="field-group">
+              <label>Número do cartão</label>
+              <input type="text" placeholder="0000 0000 0000 0000" maxlength="19"
+                oninput="mascaraCartao(this)" />
+            </div>
+            <div class="row-2">
+              <div class="field-group">
+                <label>Validade</label>
+                <input type="text" placeholder="MM/AA" maxlength="5"
+                  oninput="mascaraValidade(this)" />
+              </div>
+              <div class="field-group">
+                <label>CVV</label>
+                <input type="text" placeholder="123" maxlength="3" />
+              </div>
+            </div>
+            <div class="field-group">
+              <label>Nome no cartão</label>
+              <input type="text" placeholder="Como está impresso" />
+            </div>
+            <div class="field-group">
+              <label>Parcelas</label>
+              <select id="parcelas-select">
+                <!-- Preenchido via JS com base no total -->
+              </select>
+            </div>
+          </div>
+
+          <!-- QR Code PIX -->
+          <div class="pix-area" id="pix-area">
+            <div class="pix-qr"><img class="pix-qr-img" src="assets/detail/pix-ficticio.png" alt="QR Code PIX" /></div>
+            <p style="font-size:.85rem;color:var(--muted);text-align:center">
+              Escaneie o QR Code ou copie o código abaixo
+            </p>
+            <div class="pix-code" id="pix-code-text">
+              00020126330014BR.GOV.BCB.PIX0111IRONDARK2026...
+            </div>
+            <button class="btn-next-step" style="width:100%;justify-content:center"
+              onclick="copiarPix()">Copiar código PIX</button>
+          </div>
+
+          <!-- Boleto -->
+          <div class="boleto-area" id="boleto-area">
+            <div class="boleto-icon">🧾</div>
+            <p class="boleto-info">
+              O boleto será gerado após confirmar o pedido.<br>
+              Vencimento em <strong style="color:var(--text)">3 dias úteis</strong>.<br>
+              O pedido é separado após a confirmação do pagamento.
+            </p>
+          </div>
+
+          <div class="step-nav">
+            <button class="btn-back-step" onclick="voltarEtapa(2)">Voltar</button>
+            <button class="btn-next-step" onclick="avancarEtapa(2)">Continuar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======= ETAPA 3: PAGAMENTO / ENDEREÇO ======= -->
+      <div class="step-card" id="step3">
+        <div class="step-header" onclick="toggleStep(3)">
+          <div class="step-num" id="num3">3</div>
+          <div class="step-title">ENDEREÇO DE ENTREGA</div>
+        </div>
+        <div class="step-body">
+
+          <div class="row-2">
+            <div class="field-group">
+              <label>CEP</label>
+              <input type="text" placeholder="00000-000" maxlength="9"
+                oninput="mascaraCEP(this)" />
+            </div>
+            <div class="field-group">
+              <label>Estado</label>
+              <select>
+                <option value="">UF</option>
+                <option>AC</option><option>AL</option><option>AP</option>
+                <option>AM</option><option>BA</option><option>CE</option>
+                <option>DF</option><option>ES</option><option>GO</option>
+                <option>MA</option><option>MT</option><option>MS</option>
+                <option>MG</option><option>PA</option><option>PB</option>
+                <option>PR</option><option>PE</option><option selected>PI</option>
+                <option>RJ</option><option>RN</option><option>RS</option>
+                <option>RO</option><option>RR</option><option>SC</option>
+                <option>SP</option><option>SE</option><option>TO</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label>Endereço</label>
+            <input type="text" placeholder="Rua, Av, etc." />
+          </div>
+
+          <div class="row-3">
+            <div class="field-group">
+              <label>Número</label>
+              <input type="text" placeholder="Nº" />
+            </div>
+            <div class="field-group" style="grid-column: span 2">
+              <label>Complemento</label>
+              <input type="text" placeholder="Apto, bloco (opcional)" />
+            </div>
+          </div>
+
+          <div class="row-2">
+            <div class="field-group">
+              <label>Cidade</label>
+              <input type="text" placeholder="Sua cidade" />
+            </div>
+            <div class="field-group">
+              <label>Bairro</label>
+              <input type="text" placeholder="Bairro" />
+            </div>
+          </div>
+
+          <div class="step-nav">
+            <button class="btn-back-step" onclick="voltarEtapa(3)">Voltar</button>
+            <button class="btn-next-step" onclick="avancarEtapa(3)">Confirmar pedido</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======= ETAPA 4: PEDIDO CONCLUÍDO ======= -->
+      <div class="step-card" id="step4">
+        <div class="step-header">
+          <div class="step-num" id="num4">4</div>
+          <div class="step-title">PEDIDO CONCLUÍDO</div>
+        </div>
+        <div class="success-body" id="success-body">
+          <div class="success-icon">✅</div>
+          <div class="success-title">PEDIDO CONFIRMADO!</div>
+          <p class="success-sub">
+            Seu pedido foi recebido com sucesso.<br>
+            Você receberá um e-mail com os detalhes e o código de rastreamento assim que seu produto for despachado.
+          </p>
+          <div class="success-code" id="order-code">IRON-000000</div>
+          <button class="btn-back-home" onclick="window.location.href='index.html'">
+            Voltar à loja
+          </button>
+        </div>
+      </div>
+
+    </div>
+    <!-- /steps-col -->
+
+    <!-- ── COLUNA DIREITA: Resumo do Pedido ── -->
+    <div class="summary-col">
+      <div class="summary-title">RESUMO DO PEDIDO</div>
+
+      <!-- Itens do carrinho (preenchidos via JS) -->
+      <div class="summary-items" id="summary-items">
+        <div class="empty-cart-msg">
+          <div class="icon">🛒</div>
+          <p>Seu carrinho está vazio.<br>Adicione produtos antes de finalizar.</p>
+          <button class="btn-go-back" onclick="window.location.href='index.html'">
+            Ver produtos
+          </button>
+        </div>
+      </div>
+
+      <hr class="summary-divider" />
+
+      <!-- Totais -->
+      <div class="summary-row">
+        <span>Total dos produtos</span>
+        <span id="subtotal-val">R$ 0,00</span>
+      </div>
+      <div class="summary-row">
+        <span>Descontos</span>
+        <span id="discount-val">—</span>
+      </div>
+      <div class="summary-row">
+        <span>Frete</span>
+        <span id="frete-val" style="color:var(--green)">Grátis</span>
+      </div>
+      <hr class="summary-divider" />
+      <div class="summary-row total">
+        <span>Total da compra</span>
+        <span id="total-val">R$ 0,00</span>
+      </div>
+
+      <!-- Cupom -->
+      <div class="coupon-area">
+        <div class="coupon-label">CUPOM DE DESCONTO</div>
+        <div class="coupon-row">
+          <input class="coupon-input" id="coupon-input" type="text" placeholder="Código do cupom" />
+          <button class="btn-coupon" onclick="aplicarCupom()">Aplicar</button>
+        </div>
+        <p id="coupon-msg" style="font-size:.75rem;color:var(--muted);margin-top:.4rem;display:none"></p>
+      </div>
+
+      <!-- Segurança -->
+      <div class="security-badges">
+        <div class="security-row">
+          <span>🔒</span>
+          <span>Pagamento seguro</span>
+        </div>
+        <div class="card-logos" aria-label="Formas de pagamento aceitas">
+          <img src="assets/payment/VISA.svg" alt="Visa" />
+          <img src="assets/payment/mastercard.svg" alt="Mastercard" />
+          <img src="assets/payment/odin.svg" alt="Diners Club" />
+          <img src="assets/payment/amerecianexpress.svg" alt="American Express" />
+          <img src="assets/payment/hipercard.svg" alt="Hipercard" />
+          <img src="assets/payment/aura.svg" alt="Aura" />
+          <img src="assets/payment/elo.svg" alt="Elo" />
+          <img src="assets/payment/boleto.svg" alt="Boleto" />
+          <img src="assets/payment/bancodobrasil.svg" alt="Banco do Brasil" />
+          <img src="assets/payment/caixa.svg" alt="Caixa" />
+          <img src="assets/payment/paypal.svg" alt="PayPal" />
+          <img src="assets/payment/pix.svg" alt="PIX" />
+        </div>
+      </div>
+    </div>
+    <!-- /summary-col -->
+
+  </div>
+  <!-- /checkout-page -->
+
+  <script>
+    // =============================================================
+    //  CHECKOUT.JS – Lógica da página de checkout IRONDARK
+    // =============================================================
+
+    // ----- 1. CARREGAR ITENS DO CARRINHO -----
+    // Os itens são passados via sessionStorage pelo script.js do site principal.
+    // Formato esperado: [{ name, price, qty, emoji }]
+
+    let cartItems = [];
+    let desconto  = 0;
+    const CUPONS_VALIDOS = { 'IRON10': 10, 'DARK20': 20, 'FREE15': 15 };
+
+    // Mapa: parte do nome do produto → arquivo de imagem em assets/
+    const PRODUCT_IMAGES = {
+      'bcaa':           'assets/bcaa.png',
+      'creatina':       'assets/creatina.png',
+      'multivitam':     'assets/multivitaminico.png',
+      'termog':         'assets/termogenico.png',
+      'void':           'assets/voidx.png',
+      'whey':           'assets/whey.png',
+    };
+
+    // Retorna o caminho da imagem com base no nome do produto
+    function getProductImage(name) {
+      if (!name) return null;
+      const lower = name.toLowerCase();
+      for (const [key, path] of Object.entries(PRODUCT_IMAGES)) {
+        if (lower.includes(key)) return path;
+      }
+      return null; // sem imagem → usa emoji/ícone
+    }
+
+    // Gera o HTML do thumb: <img> se encontrou imagem, fallback para emoji
+    function productThumb(item) {
+      const src = getProductImage(item.name);
+      if (src) {
+        return `<img src="${src}" alt="${item.name}" loading="lazy" style="width:100%;height:100%;object-fit:contain;border-radius:6px;" />`;
+      }
+      return item.emoji || '📦';
+    }
+
+    function carregarCarrinho() {
+      const stored = sessionStorage.getItem('irondark_cart');
+      if (stored) {
+        try { cartItems = JSON.parse(stored); } catch(e) { cartItems = []; }
+      }
+
+      // Se veio sem carrinho salvo, carrega um pedido padrão para visualização
+      if (cartItems.length === 0) {
+        cartItems = [
+          { name: 'IRONDARK VOID-X', price: 119.90, qty: 1, emoji: '⚡' },
+          { name: 'IRONDARK Whey Protein 80%', price: 139.90, qty: 1, emoji: '🥛' }
+        ];
+      }
+
+      renderizarResumo();
+      preencherParcelas();
+    }
+
+    // ----- 2. RENDERIZAR RESUMO -----
+    function renderizarResumo() {
+      const container = document.getElementById('summary-items');
+
+      if (cartItems.length === 0) {
+        container.innerHTML = `
+          <div class="empty-cart-msg">
+            <div class="icon">🛒</div>
+            <p>Seu carrinho está vazio.<br>Adicione produtos antes de finalizar.</p>
+            <button class="btn-go-back" onclick="window.location.href='index.html'">Ver produtos</button>
+          </div>`;
+        return;
+      }
+
+      container.innerHTML = cartItems.map((item, i) => `
+        <div class="summary-item" id="item-${i}">
+          <div class="summary-item-img">${productThumb(item)}</div>
+          <div class="summary-item-info">
+            <div class="summary-item-name">${item.name}</div>
+            <div class="summary-item-sub">Unidade</div>
+          </div>
+          <div class="summary-item-qty">
+            <button class="qty-btn" onclick="alterarQty(${i}, -1)">−</button>
+            <span class="qty-num" id="qty-${i}">${item.qty}</span>
+            <button class="qty-btn" onclick="alterarQty(${i}, +1)">+</button>
+          </div>
+          <div class="summary-item-price" id="price-${i}">
+            R$ ${(item.price * item.qty).toFixed(2).replace('.', ',')}
+          </div>
+          <span class="remove-item" onclick="removerItem(${i})" title="Remover">✕</span>
+        </div>
+      `).join('');
+
+      atualizarTotais();
+    }
+
+    function alterarQty(index, delta) {
+      cartItems[index].qty = Math.max(1, cartItems[index].qty + delta);
+      document.getElementById(`qty-${index}`).textContent = cartItems[index].qty;
+      document.getElementById(`price-${index}`).textContent =
+        'R$ ' + (cartItems[index].price * cartItems[index].qty).toFixed(2).replace('.', ',');
+      atualizarTotais();
+      salvarCarrinho();
+    }
+
+    function removerItem(index) {
+      cartItems.splice(index, 1);
+      renderizarResumo();
+      salvarCarrinho();
+    }
+
+    function atualizarTotais() {
+      const subtotal = cartItems.reduce((s, i) => s + i.price * i.qty, 0);
+      const total    = Math.max(0, subtotal - desconto);
+
+      document.getElementById('subtotal-val').textContent =
+        'R$ ' + subtotal.toFixed(2).replace('.', ',');
+      document.getElementById('discount-val').textContent =
+        desconto > 0 ? '− R$ ' + desconto.toFixed(2).replace('.', ',') : '—';
+      document.getElementById('total-val').textContent =
+        'R$ ' + total.toFixed(2).replace('.', ',');
+
+      preencherParcelas(total);
+    }
+
+    function salvarCarrinho() {
+      sessionStorage.setItem('irondark_cart', JSON.stringify(cartItems));
+    }
+
+    // ----- 3. PARCELAS -----
+    function preencherParcelas(total) {
+      const sel = document.getElementById('parcelas-select');
+      if (!sel) return;
+      const t = total || cartItems.reduce((s, i) => s + i.price * i.qty, 0);
+      sel.innerHTML = '';
+      for (let n = 1; n <= 12; n++) {
+        const val = (t / n).toFixed(2).replace('.', ',');
+        const taxa = n > 3 ? ` (+juros)` : ` sem juros`;
+        const opt  = document.createElement('option');
+        opt.value  = n;
+        opt.textContent = `${n}x de R$ ${val}${taxa}`;
+        sel.appendChild(opt);
+      }
+    }
+
+    // ----- 4. CUPOM DE DESCONTO -----
+    function aplicarCupom() {
+      const codigo = document.getElementById('coupon-input').value.trim().toUpperCase();
+      const msg    = document.getElementById('coupon-msg');
+      msg.style.display = 'block';
+
+      if (CUPONS_VALIDOS[codigo]) {
+        const pct     = CUPONS_VALIDOS[codigo];
+        const subtotal = cartItems.reduce((s, i) => s + i.price * i.qty, 0);
+        desconto = (subtotal * pct) / 100;
+        msg.style.color = 'var(--green)';
+        msg.textContent = `✓ Cupom aplicado! ${pct}% de desconto (− R$ ${desconto.toFixed(2).replace('.', ',')})`;
+        atualizarTotais();
+      } else {
+        desconto = 0;
+        msg.style.color = 'var(--red)';
+        msg.textContent = '✕ Cupom inválido ou expirado.';
+        atualizarTotais();
+      }
+    }
+
+    // ----- 5. MÉTODO DE PAGAMENTO -----
+    function selecionarPagamento(metodo) {
+      document.querySelectorAll('.pay-option').forEach(option => option.classList.remove('selected'));
+      const checkedOption = document.querySelector('input[name="pagamento"]:checked')?.closest('.pay-option');
+      if (checkedOption) {
+        checkedOption.classList.add('selected');
+      } else if (document.getElementById(`pay-${metodo}`)) {
+        document.getElementById(`pay-${metodo}`).classList.add('selected');
+      }
+
+      document.getElementById('form-cartao').style.display = metodo === 'cartao' ? 'flex'   : 'none';
+      document.getElementById('pix-area').classList.toggle('show',    metodo === 'pix');
+      document.getElementById('boleto-area').classList.toggle('show', metodo === 'boleto');
+
+      if (metodo === 'pix') gerarCodigoPix();
+    }
+
+    function gerarCodigoPix() {
+      const total = cartItems.reduce((s,i) => s + i.price * i.qty, 0) - desconto;
+      const codigo = `00020126330014BR.GOV.BCB.PIX0111IRONDARK2026520400005303986540${total.toFixed(2).replace('.', '')}5802BR5913IRON DARK LTDA6008TERESINA62070503***6304ABCD`;
+      document.getElementById('pix-code-text').textContent = codigo;
+    }
+
+    function copiarPix() {
+      const codigo = document.getElementById('pix-code-text').textContent;
+      navigator.clipboard.writeText(codigo).then(() => {
+        alert('✓ Código PIX copiado!');
+      });
+    }
+
+    // ----- 6. MÁSCARAS DE INPUT -----
+    function mascaraCartao(input) {
+      let v = input.value.replace(/\D/g, '').substring(0, 16);
+      input.value = v.replace(/(.{4})/g, '$1 ').trim();
+    }
+
+    function mascaraValidade(input) {
+      let v = input.value.replace(/\D/g, '').substring(0, 4);
+      if (v.length >= 3) v = v.slice(0, 2) + '/' + v.slice(2);
+      input.value = v;
+    }
+
+    function mascaraCEP(input) {
+      let v = input.value.replace(/\D/g, '').substring(0, 8);
+      if (v.length >= 6) v = v.slice(0, 5) + '-' + v.slice(5);
+      input.value = v;
+    }
+
+    // ----- 7. NAVEGAÇÃO ENTRE ETAPAS -----
+    let etapaAtual = 1;
+
+    function avancarEtapa(etapa) {
+      if (etapa === 1) {
+        const email = document.getElementById('email-input').value.trim();
+        if (!email) {
+          alert('Preencha o e-mail para continuar.');
+          return;
+        }
+      }
+
+      if (etapa === 3) {
+        // Etapa final – confirmar pedido
+        concluirPedido();
+        return;
+      }
+
+      // Marcar etapa atual como concluída
+      const cardAtual = document.getElementById(`step${etapa}`);
+      cardAtual.classList.remove('active');
+      cardAtual.classList.add('done');
+      document.getElementById(`num${etapa}`).textContent = '✓';
+
+      // Ativar próxima etapa
+      etapaAtual = etapa + 1;
+      const proxCard = document.getElementById(`step${etapaAtual}`);
+      proxCard.classList.add('active');
+      proxCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function voltarEtapa(etapa) {
+      const cardAtual = document.getElementById(`step${etapa}`);
+      cardAtual.classList.remove('active');
+
+      etapaAtual = etapa - 1;
+      const prevCard = document.getElementById(`step${etapaAtual}`);
+      prevCard.classList.remove('done');
+      prevCard.classList.add('active');
+      document.getElementById(`num${etapaAtual}`).textContent = etapaAtual;
+      prevCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function toggleStep(etapa) {
+      // Permite abrir etapas já concluídas para editar
+      const card = document.getElementById(`step${etapa}`);
+      if (card.classList.contains('done')) {
+        card.classList.remove('done');
+        card.classList.add('active');
+        document.getElementById(`num${etapa}`).textContent = etapa;
+      }
+    }
+
+    // ----- 8. CONCLUIR PEDIDO -----
+    function concluirPedido() {
+      // Marcar etapas 1, 2, 3 como concluídas
+      [1, 2, 3].forEach(n => {
+        const c = document.getElementById(`step${n}`);
+        c.classList.remove('active');
+        c.classList.add('done');
+        document.getElementById(`num${n}`).textContent = '✓';
+      });
+
+      // Ativar etapa 4
+      const step4 = document.getElementById('step4');
+      step4.classList.add('active');
+      document.getElementById('success-body').style.display = 'flex';
+
+      // Gerar código do pedido aleatório
+      const codigo = 'IRON-' + Math.floor(100000 + Math.random() * 900000);
+      document.getElementById('order-code').textContent = codigo;
+
+      // Limpar carrinho
+      sessionStorage.removeItem('irondark_cart');
+      step4.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ----- LOGIN / CADASTRO DECORATIVO -----
+    const loginLink = document.querySelector('.login-link');
+    const authModal = document.getElementById('auth-modal');
+
+    function setAuthPanel(mode = 'login') {
+      if (!authModal) return;
+      authModal.querySelectorAll('.auth-tab').forEach(tab => tab.classList.toggle('active', tab.dataset.authTab === mode));
+      authModal.querySelectorAll('.auth-panel').forEach(panel => panel.classList.toggle('active', panel.dataset.authPanel === mode));
+    }
+
+    function openAuth(mode = 'login') {
+      if (!authModal) return;
+      authModal.setAttribute('aria-hidden', 'false');
+      setAuthPanel(mode);
+    }
+
+    function closeAuth() {
+      if (!authModal) return;
+      authModal.setAttribute('aria-hidden', 'true');
+    }
+
+    function showAuthFeedback(message) {
+      const feedback = authModal?.querySelector('.auth-feedback');
+      if (!feedback) return;
+      feedback.textContent = message;
+      feedback.classList.add('show');
+      setTimeout(() => feedback.classList.remove('show'), 2600);
+    }
+
+    if (loginLink) {
+      loginLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        openAuth('login');
+      });
+    }
+
+    document.querySelectorAll('[data-open-auth]').forEach((el) => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        openAuth(el.dataset.openAuth || 'login');
+      });
+    });
+
+    if (authModal) {
+      authModal.addEventListener('click', (e) => {
+        if (e.target.classList.contains('auth-backdrop') || e.target.classList.contains('auth-close')) closeAuth();
+        const tab = e.target.closest('[data-auth-tab]');
+        if (tab) setAuthPanel(tab.dataset.authTab);
+        if (e.target.classList.contains('auth-fake-login')) {
+          const id = authModal.querySelector('#login-identifier')?.value.trim();
+          const pass = authModal.querySelector('#login-pass')?.value.trim();
+          if (!id || !pass) { showAuthFeedback('Preencha e-mail/CPF e senha para simular o login.'); return; }
+          showAuthFeedback('Login realizado com sucesso. Bem-vindo à IRONDARK!');
+          setTimeout(closeAuth, 1300);
+        }
+        if (e.target.classList.contains('auth-link-button')) showAuthFeedback('Enviamos as instruções de recuperação para o seu e-mail cadastrado.');
+      });
+
+      authModal.querySelector('[data-auth-panel="register"]')?.addEventListener('submit', (ev) => {
+        ev.preventDefault();
+        const required = ['#reg-name', '#reg-email', '#reg-cpf', '#reg-pass'];
+        const ok = required.every(selector => authModal.querySelector(selector)?.value.trim());
+        if (!ok) { showAuthFeedback('Preencha nome, e-mail, CPF e senha para simular o cadastro.'); return; }
+        showAuthFeedback('Cadastro realizado com sucesso. Sua conta foi criada!');
+        setTimeout(closeAuth, 1300);
+      });
+
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAuth(); });
+    }
+
+
+    // ----- V6: LIGHT MODE / DARK MODE -----
+    const themeToggle = document.querySelector('.theme-toggle');
+    function applyTheme(theme) {
+      const normalized = theme === 'light' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', normalized);
+      localStorage.setItem('irondark_theme', normalized);
+      if (themeToggle) {
+        const currentLabel = normalized === 'light' ? 'Light' : 'Dark';
+        themeToggle.setAttribute('aria-label', `Tema atual: ${currentLabel}. Clique para alternar.`);
+        const label = themeToggle.querySelector('.theme-toggle-text');
+        if (label) label.textContent = currentLabel;
+      }
+    }
+    applyTheme('dark');
+
+    // ----- INICIALIZAÇÃO -----
+    carregarCarrinho();
+    selecionarPagamento('cartao');
+  </script>
+
+</body>
+</html>

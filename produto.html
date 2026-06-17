@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IRONDARK V11 | Produto</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script>document.documentElement.dataset.theme = 'dark'; localStorage.setItem('irondark_theme','dark');</script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="noise"></div>
+
+  <header class="topbar">
+    <a class="brand" href="index.html#inicio" aria-label="IRONDARK — voltar ao início">
+      <span>IRON<span>DARK</span></span>
+    </a>
+
+    <nav class="nav-menu">
+      <a href="index.html#inicio">Início</a>
+      <a href="index.html#produtos">Produtos</a>
+      <a href="index.html#feedbacks">Feedbacks</a>
+      <a href="checkout.html">Checkout</a>
+    </nav>
+
+    <div class="topbar-actions">
+      <button class="cart-toggle-btn" aria-label="Abrir carrinho">
+        <img class="cart-svg-icon" src="assets/icons/cart-svgrepo-com.svg" alt="" aria-hidden="true" />
+        <span class="cart-bubble" aria-hidden="true" style="display:none">0</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="product-detail-page" id="produto">
+    <section class="detail-hero">
+      <div class="detail-media reveal">
+        <img id="detail-image" src="assets/voidx.png" alt="Produto selecionado" />
+      </div>
+
+      <div class="detail-panel reveal delay-1">
+        <a class="back-chip" href="index.html#produtos">← Voltar aos produtos</a>
+        <p class="detail-category" id="detail-category">Categoria</p>
+        <h1 class="detail-title" id="detail-title">Produto</h1>
+        <p class="detail-description" id="detail-description"></p>
+
+        <div class="detail-meta">
+          <span class="detail-pill" id="detail-tag">Objetivo</span>
+          <span class="detail-pill" id="detail-rating">★★★★★ 4.8</span>
+          <span class="detail-pill">Compra verificada</span>
+        </div>
+
+        <div class="detail-price" id="detail-price">R$ 0,00</div>
+        <p class="detail-installment" id="detail-installment"></p>
+
+        <div class="detail-actions">
+          <button class="cart-btn" id="detail-add-cart" type="button">Adicionar ao carrinho</button>
+          <a class="btn ghost" href="checkout.html">Ir para checkout</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section detail-info-grid">
+      <article class="nutrition-panel reveal">
+        <span class="eyebrow">Tabela nutricional</span>
+        <h2 id="nutrition-title">Informação do produto</h2>
+        <div class="nutrition-frame" id="nutrition-content"></div>
+      </article>
+
+      <article class="detail-extra-card reveal delay-1">
+        <span class="eyebrow">Benefícios</span>
+        <h2>O que o produto oferece</h2>
+        <ul class="detail-benefits" id="detail-benefits"></ul>
+
+        <div class="detail-copy-block">
+          <h3>Modo de uso</h3>
+          <p id="detail-use"></p>
+        </div>
+        <div class="detail-copy-block">
+          <h3>Composição principal</h3>
+          <p id="detail-ingredients"></p>
+        </div>
+      </article>
+    </section>
+
+    <section class="section feedback-section product-review-section" id="feedbacks-produto">
+      <div class="section-head reveal">
+        <span class="eyebrow">Feedbacks</span>
+        <h2>Avaliações deste produto</h2>
+        <p>Confira o que os clientes destacam sobre sabor, rendimento, entrega e experiência de compra.</p>
+      </div>
+      <div class="feedback-grid" id="product-feedbacks"></div>
+    </section>
+  </main>
+
+  <aside class="cart-drawer" aria-hidden="true">
+    <button class="close-cart" aria-label="Fechar carrinho">×</button>
+    <h3>Carrinho <span class="irondark">IRON<span>DARK</span></span></h3>
+    <div class="cart-items"></div>
+    <p class="cart-total">Total: <strong>R$ 0,00</strong></p>
+    <button class="btn primary full">Finalizar compra</button>
+  </aside>
+
+  <footer class="footer">
+    <p>© 2026 <span class="irondark">IRON<span>DARK</span></span> — Página de produto V11.</p>
+  </footer>
+
+  <script src="produto.js"></script>
+</body>
+</html>

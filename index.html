@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IRONDARK | Suplementos de Alta Performance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script>document.documentElement.dataset.theme = 'dark'; localStorage.setItem('irondark_theme','dark');</script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="noise"></div>
+
+  <header class="topbar" id="topo">
+    <a class="brand" href="#inicio" aria-label="IRONDARK — voltar ao início">
+      <span>IRON<span>DARK</span></span>
+    </a>
+
+    <button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="nav-menu">
+      <a href="#inicio">Início</a>
+      <a href="#produtos">Produtos</a>
+      <a href="#feedbacks">Feedbacks</a>
+      <a href="#beneficios">Benefícios</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#contato">Contato</a>
+    </nav>
+
+    <div class="topbar-actions">
+      <a class="login-link" href="#contato" title="Entrar / Cadastrar">
+        <img class="login-svg-icon" src="assets/icons/profile-svgrepo-com.svg" alt="" aria-hidden="true" />
+        <span class="login-text">Cadastre-se ou<br>faça seu login</span>
+      </a>
+
+      <button class="cart-toggle-btn" aria-label="Abrir carrinho">
+        <img class="cart-svg-icon" src="assets/icons/cart-svgrepo-com.svg" alt="" aria-hidden="true" />
+        <span class="cart-bubble" aria-hidden="true" style="display:none">0</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="hero-bg"></div>
+      <div class="hero-content reveal">
+        <span class="eyebrow">Linha premium de suplementos<br></span>
+        <h1>NÃO TREINE FRACO<br><span>EVOLUA COM <span class="irondark">IRON<span>DARK</span></span></span></h1>
+        <p>
+          <span class="irondark">IRON<span>DARK</span></span> é uma loja de suplementos de alta performance criada para atletas, praticantes de 
+musculação e pessoas que buscam uma rotina de treino mais intensa, organizada e objetiva.
+        </p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#produtos">Ver produtos</a>
+          <a class="btn ghost" href="#chatbot">Falar com o assistente</a>
+        </div>
+      </div>
+
+      <div class="hero-product reveal delay-1">
+        <video class="product-video-bg" autoplay muted loop playsinline>
+          <source src="assets/bg-product.mp4" type="video/mp4">
+        </video>
+
+        <div class="product-glow"></div>
+
+        <img 
+          src="assets/voidx.png" 
+          alt="IRONDARK VOID-X Pré-treino" 
+          class="hero-product-img"
+        >
+      </div>
+    </section>
+
+    <section class="stats-strip" aria-label="Números da IRONDARK">
+      <div><strong>6</strong><span>Produtos</span></div>
+      <div><strong>24h</strong><span>Suporte</span></div>
+      <div><strong>Premium</strong><span>Qualidade</span></div>
+      <div><strong>IA</strong><span>Chatbot</span></div>
+    </section>
+
+    <section class="section products-section" id="produtos">
+      <div class="section-head reveal">
+        <span class="eyebrow">Catálogo</span>
+        <h2>Produtos <span class="irondark">IRON<span>DARK</span></span></h2>
+        <p>Linha <span class="irondark">IRON<span>DARK</span></span> com produtos organizados por objetivo, visual premium e identidade 
+          escura de alta performance.</p>
+      </div>
+
+      <div class="product-grid">
+        <article class="product-card reveal" data-tone="blue" data-product="bcaa">
+          <div class="card-glow"></div>
+          <span class="tag">Recuperação</span>
+          <div class="product-image"><img src="assets/bcaa.png" alt="IRONDARK BCAA 2:1:1" /></div>
+          <div class="product-info">
+            <p class="category">Aminoácidos</p>
+            <h3><span class="irondark">IRON<span>DARK</span></span> BCAA 2:1:1</h3>
+            <p>Suporte para recuperação muscular e resistência durante treinos intensos.</p>
+            <div class="product-bottom"><strong>R$ 79,90</strong><a class="detail-btn" href="produto.html?id=bcaa" aria-label="Ver detalhes de BCAA 2:1:1">Ver detalhes</a><button class="cart-btn">Adicionar</button></div>
+          </div>
+        </article>
+
+        <article class="product-card reveal" data-tone="silver" data-product="creatina">
+          <div class="card-glow"></div>
+          <span class="tag">Força</span>
+          <div class="product-image"><img src="assets/creatina.png" alt="IRONDARK Creatina Monohidratada" /></div>
+          <div class="product-info">
+            <p class="category">Creatina</p>
+            <h3><span class="irondark">IRON<span>DARK</span></span> Creatina Monohidratada</h3>
+            <p>Auxilia no ganho de força, potência e desempenho em exercícios de alta intensidade.</p>
+            <div class="product-bottom"><strong>R$ 69,90</strong><a class="detail-btn" href="produto.html?id=creatina" aria-label="Ver detalhes de Creatina Monohidratada">Ver detalhes</a><button class="cart-btn">Adicionar</button></div>
+          </div>
+        </article>
+
+        <article class="product-card reveal" data-tone="rainbow" data-product="multivitaminico">
+          <div class="card-glow"></div>
+          <span class="tag">Saúde</span>
+          <div class="product-image"><img src="assets/multivitaminico.png" alt="IRONDARK Multivitamínico Ultra" /></div>
+          <div class="product-info">
+            <p class="category">Vitaminas</p>
+            <h3><span class="irondark">IRON<span>DARK</span></span> Multivitamínico Ultra</h3>
+            <p>Combinação de vitaminas e minerais para complementar a rotina alimentar.</p>
+            <div class="product-bottom"><strong>R$ 54,90</strong><a class="detail-btn" href="produto.html?id=multivitaminico" aria-label="Ver detalhes de Multivitamínico Ultra">Ver detalhes</a><button class="cart-btn">Adicionar</button></div>
+          </div>
+        </article>
+
+        <article class="product-card reveal" data-tone="gold" data-product="termogenico">
+          <div class="card-glow"></div>
+          <span class="tag">Definição</span>
+          <div class="product-image"><img src="assets/termogenico.png" alt="IRONDARK Termogênico 200mg" /></div>
+          <div class="product-info">
+            <p class="category">Termogênico</p>
+            <h3><span class="irondark">IRON<span>DARK</span></span> Termogênico 200mg</h3>
+            <p>Produto voltado para energia, foco e suporte em fases de treino para definição.</p>
+            <div class="product-bottom"><strong>R$ 89,90</strong><a class="detail-btn" href="produto.html?id=termogenico" aria-label="Ver detalhes de Termogênico 200mg">Ver detalhes</a><button class="cart-btn">Adicionar</button></div>
+          </div>
+        </article>
+
+        <article class="product-card reveal" data-tone="lime" data-product="voidx">
+          <div class="card-glow"></div>
+          <span class="tag">Explosão</span>
+          <div class="product-image"><img src="assets/voidx.png" alt="IRONDARK VOID-X Pré-treino" /></div>
+          <div class="product-info">
+            <p class="category">Pré-treino</p>
+            <h3><span class="irondark">IRON<span>DARK</span></span> VOID-X</h3>
+            <p>Pré-treino desenvolvido para quem busca foco, energia e intensidade antes do treino.</p>
+            <div class="product-bottom"><strong>R$ 119,90</strong><a class="detail-btn" href="produto.html?id=voidx" aria-label="Ver detalhes de VOID-X">Ver detalhes</a><button class="cart-btn">Adicionar</button></div>
+          </div>
+        </article>
+
+        <article class="product-card reveal" data-tone="whey" data-product="whey">
+          <div class="card-glow"></div>
+          <span class="tag">Proteína</span>
+          <div class="product-image"><img src="assets/whey.png" alt="IRONDARK Whey Protein 80%" /></div>
+          <div class="product-info">
+            <p class="category">Whey Protein</p>
+            <h3><span class="irondark">IRON<span>DARK</span></span> Whey Protein 80%</h3>
+            <p>Proteína em pó para auxiliar no ganho de massa muscular e recuperação pós-treino.</p>
+            <div class="product-bottom"><strong>R$ 139,90</strong><a class="detail-btn" href="produto.html?id=whey" aria-label="Ver detalhes de Whey Protein 80%">Ver detalhes</a><button class="cart-btn">Adicionar</button></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+
+    <section class="section feedback-section" id="feedbacks">
+      <div class="section-head reveal">
+        <span class="eyebrow">Avaliações</span>
+        <h2>Feedbacks de clientes</h2>
+        <p>Opiniões reais de clientes sobre compra, entrega, atendimento e experiência com os produtos IRONDARK.</p>
+      </div>
+
+      <div class="feedback-layout reveal">
+        <article class="rating-panel">
+          <div class="rating-score">4.8</div>
+          <div class="rating-stars">★★★★★</div>
+          <p>Média geral baseada na experiência dos clientes com a loja, qualidade dos produtos e agilidade no atendimento.</p>
+          <div class="rating-bars" aria-label="Distribuição de notas">
+            <span>5 estrelas</span><b style="--w:86%"></b>
+            <span>4 estrelas</span><b style="--w:12%"></b>
+            <span>3 estrelas</span><b style="--w:2%"></b>
+          </div>
+        </article>
+
+        <div class="feedback-grid">
+          <article class="feedback-card">
+            <div class="feedback-top"><span class="avatar">RM</span><div><strong>Renato M.</strong><small>Compra verificada · Whey Protein</small></div></div>
+            <div class="rating-stars small">★★★★★</div>
+            <p>Produto bem embalado, bom rendimento e descrição clara. A tabela nutricional ajudou na escolha.</p>
+          </article>
+          <article class="feedback-card">
+            <div class="feedback-top"><span class="avatar">IS</span><div><strong>Igor S.</strong><small>Compra verificada · Creatina</small></div></div>
+            <div class="rating-stars small">★★★★★</div>
+            <p>Gostei da página do produto. Benefícios, modo de uso e informações ficaram fáceis de comparar.</p>
+          </article>
+          <article class="feedback-card">
+            <div class="feedback-top"><span class="avatar">AL</span><div><strong>Alice L.</strong><small>Compra verificada · VOID-X</small></div></div>
+            <div class="rating-stars small">★★★★☆</div>
+            <p>Visual forte e direto. A separação por objetivo ajuda bastante para encontrar o suplemento certo.</p>
+          </article>
+          <article class="feedback-card">
+            <div class="feedback-top"><span class="avatar">CD</span><div><strong>Caio D.</strong><small>Compra verificada · BCAA</small></div></div>
+            <div class="rating-stars small">★★★★★</div>
+            <p>Checkout simples, carrinho rápido e opção PIX bem destacada. A finalização da compra ficou prática e confiável.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section benefits-section" id="beneficios">
+      <div class="section-head reveal">
+        <span class="eyebrow">Diferenciais</span>
+        <h2>Por que comprar na <span class="irondark">IRON<span>DARK</span></span>?</h2>
+      </div>
+      <div class="benefits-grid">
+        <article class="benefit reveal">
+          <div class="benefit-image-container">
+            <video class="benefit-image benefit-video" autoplay muted loop playsinline preload="metadata" aria-label="Energia no treino">
+              <source src="assets/energia-no-treino.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <h3>Energia no treino</h3>
+          <p>Produtos organizados por objetivo para facilitar a escolha do cliente.</p>
+        </article>
+        <article class="benefit reveal">
+          <div class="benefit-image-container">
+            <video class="benefit-image benefit-video" autoplay muted loop playsinline preload="metadata" aria-label="Estilo premium">
+              <source src="assets/estilo-premium.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <h3>Estilo premium</h3>
+          <p>Um visual profissional que passa confiança, força e personalidade.</p>
+        </article>
+        <article class="benefit reveal">
+          <div class="benefit-image-container">
+            <video class="benefit-image benefit-video" autoplay muted loop playsinline preload="metadata" aria-label="Atendimento com IA">
+              <source src="assets/atendimento-com-ia.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <h3>Atendimento com IA</h3>
+          <p>Chatbot para responder dúvidas sobre produtos, pagamento e entrega.</p>
+        </article>
+        <article class="benefit reveal">
+          <div class="benefit-image-container">
+            <video class="benefit-image benefit-video" autoplay muted loop playsinline preload="metadata" aria-label="Layout responsivo">
+              <source src="assets/layout-responsivo.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <h3>Layout responsivo</h3>
+          <p>Estrutura preparada para funcionar em computador, tablet e celular.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section about-section" id="sobre">
+      <div class="about-text reveal">
+        <span class="eyebrow">Sobre a marca</span>
+        <h2>Suplementos para performance real</h2>
+        <p>
+A IRONDARK nasceu para quem leva o treino a sério. Nossa linha reúne 
+suplementos voltados para força, energia, recuperação e evolução física, com uma identidade escura, intensa e alinhada ao 
+universo da musculação.
+        </p>
+        <ul>
+          <li>Produtos organizados por objetivo: força, energia, recuperação e definição.</li>
+          <li>Identidade visual escura, agressiva e alinhada ao universo da musculação.</li>
+          <li>Atendimento rápido para orientar o cliente na escolha do suplemento ideal.</li>
+        </ul>
+      </div>
+      <div class="about-panel reveal delay-1">
+        <strong class="irondark">IRON<span>DARK</span></strong>
+        <span>SUPPLEMENTS</span>
+      </div>
+    </section>
+
+    <section class="section contact-section" id="contato">
+      <div class="section-head reveal">
+        <span class="eyebrow">Contato</span>
+        <h2>Fale com a <span class="irondark">IRON<span>DARK</span></span></h2>
+        <p>Atendimento <span class="irondark">IRON<span>DARK</span></span> para tirar dúvidas, acompanhar pedidos e orientar sua próxima escolha.</p>
+      </div>
+      <form class="contact-form reveal">
+        <input type="text" placeholder="Seu nome" required />
+        <input type="email" placeholder="Seu e-mail" required />
+        <textarea placeholder="Digite sua mensagem"></textarea>
+        <button class="btn primary" type="submit">Enviar mensagem</button>
+      </form>
+    </section>
+  </main>
+
+  <!-- Modal decorativo de login/cadastro -->
+  <div id="auth-modal" class="auth-modal" aria-hidden="true">
+    <div class="auth-backdrop"></div>
+    <div class="auth-dialog" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+      <button class="auth-close" aria-label="Fechar">×</button>
+
+      <div class="auth-brand">
+        <span class="auth-brand-mark">ID</span>
+        <div>
+          <p>Área do cliente</p>
+          <h3 id="auth-title">IRON<span>DARK</span></h3>
+        </div>
+      </div>
+
+      <p class="auth-sub">Entre na sua conta ou crie seu cadastro para acompanhar pedidos, compras e ofertas exclusivas.</p>
+
+      <div class="auth-tabs" role="tablist" aria-label="Login e cadastro">
+        <button type="button" class="auth-tab active" data-auth-tab="login">Entrar</button>
+        <button type="button" class="auth-tab" data-auth-tab="register">Cadastrar</button>
+      </div>
+
+      <form class="auth-panel active" data-auth-panel="login">
+        <div class="field-group">
+          <label for="login-identifier">E-mail ou CPF</label>
+          <input id="login-identifier" type="text" placeholder="Digite seu e-mail ou CPF" autocomplete="username" />
+        </div>
+        <div class="field-group">
+          <label for="login-pass">Senha</label>
+          <input id="login-pass" type="password" placeholder="Digite sua senha" autocomplete="current-password" />
+        </div>
+        <button type="button" class="btn primary auth-fake-login">Entrar na conta</button>
+        <button type="button" class="auth-link-button">Esqueci minha senha</button>
+      </form>
+
+      <form class="auth-panel" data-auth-panel="register">
+        <div class="field-group"><label for="reg-name">Nome completo</label><input id="reg-name" type="text" placeholder="Seu nome" /></div>
+        <div class="field-group"><label for="reg-email">E-mail</label><input id="reg-email" type="email" placeholder="seuemail@exemplo.com" /></div>
+        <div class="field-row">
+          <div class="field-group"><label for="reg-cpf">CPF</label><input id="reg-cpf" type="text" placeholder="000.000.000-00" /></div>
+          <div class="field-group"><label for="reg-phone">Celular</label><input id="reg-phone" type="text" placeholder="(00) 00000-0000" /></div>
+        </div>
+        <div class="field-group"><label for="reg-pass">Senha</label><input id="reg-pass" type="password" placeholder="Crie uma senha" /></div>
+        <button type="submit" class="btn primary">Criar cadastro</button>
+      </form>
+
+      <div class="auth-feedback" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <aside class="cart-drawer" aria-hidden="true">
+    <button class="close-cart" aria-label="Fechar carrinho">×</button>
+    <h3>Carrinho <span class="irondark">IRON<span>DARK</span></span></h3>
+    <div class="cart-items"></div>
+    <p class="cart-total">Total: <strong>R$ 0,00</strong></p>
+    <button class="btn primary full">Finalizar compra</button>
+  </aside>
+
+  <section class="chatbot" id="chatbot">
+    <button class="chat-toggle bot-image-toggle" aria-label="Abrir chatbot">
+      <img class="chat-toggle-botimg" src="assets/bot-flutuante-azul.png" alt="Assistente virtual IRONDARK" />
+    </button>
+    <div class="chat-window">
+      <div class="chat-head">
+        <div class="chat-head-brand"><strong class="irondark">Assistente IRON<span>DARK</span></strong></div>
+        <button class="chat-close" aria-label="Fechar chatbot">×</button>
+      </div>
+      <div class="chat-messages">
+        <p class="bot-msg">Olá! Sou o assistente da <span class="irondark">IRON<span>DARK</span></span>. Posso ajudar com produtos, formas de pagamento, entrega e recomendações da loja.</p>
+      </div>
+      <form class="chat-form">
+        <input type="text" placeholder="Digite sua dúvida..." />
+        <button type="submit">Enviar</button>
+      </form>
+    </div>
+  </section>
+
+  <section class="payment-methods-section" aria-label="Formas de pagamento aceitas">
+    <h2>Formas de Pagamento</h2>
+    <p>Pagamento com cartão, PIX, boleto e carteiras digitais para uma experiência de compra rápida e segura.</p>
+    <div class="payment-grid">
+      <div class="payment-method"><img src="assets/payment/VISA.svg" alt="Visa" /></div>
+      <div class="payment-method"><img src="assets/payment/mastercard.svg" alt="Mastercard" /></div>
+      <div class="payment-method"><img src="assets/payment/odin.svg" alt="Diners Club" /></div>
+      <div class="payment-method"><img src="assets/payment/amerecianexpress.svg" alt="American Express" /></div>
+      <div class="payment-method"><img src="assets/payment/hipercard.svg" alt="Hipercard" /></div>
+      <div class="payment-method"><img src="assets/payment/aura.svg" alt="Aura" /></div>
+      <div class="payment-method"><img src="assets/payment/elo.svg" alt="Elo" /></div>
+      <div class="payment-method"><img src="assets/payment/boleto.svg" alt="Boleto" /></div>
+      <div class="payment-method"><img src="assets/payment/bancodobrasil.svg" alt="Banco do Brasil" /></div>
+      <div class="payment-method"><img src="assets/payment/caixa.svg" alt="Caixa" /></div>
+      <div class="payment-method"><img src="assets/payment/paypal.svg" alt="PayPal" /></div>
+      <div class="payment-method"><img src="assets/payment/pix.svg" alt="PIX" /></div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>© 2026 <span class="irondark">IRON<span>DARK</span></span> — Suplementos de alta performance · Versão V11.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
